@@ -1,0 +1,23 @@
+@startuml
+left to right direction
+skinparam backgroundColor white
+skinparam shadowing false
+skinparam defaultFontName DejaVu Sans
+skinparam defaultFontSize 14
+skinparam packageStyle rectangle
+skinparam usecaseBackgroundColor #EEF4FA
+skinparam usecaseBorderColor #355570
+actor "Исследователь-разработчик\nSH-03" as R
+rectangle "Система: подготовка моделей и правил" {
+ usecase "UC-15 [FR-15]\nПодготовить набор данных" as C15
+ usecase "UC-16 [FR-16]\nОбучить модели" as C16
+ usecase "UC-17 [FR-17]\nОценить модель на test" as C17
+ usecase "UC-18 [FR-18]\nСохранить версию модели" as C18
+ usecase "UC-19 [FR-19]\nНастроить версию правил" as C19
+}
+R -- C15
+R -- C16
+R -- C17
+R -- C18
+R -- C19
+@enduml
