@@ -1,23 +1,74 @@
-@startuml
-left to right direction
-skinparam backgroundColor white
-skinparam shadowing false
-skinparam defaultFontName DejaVu Sans
-skinparam defaultFontSize 14
-skinparam packageStyle rectangle
-skinparam usecaseBackgroundColor #EEF4FA
-skinparam usecaseBorderColor #355570
-actor "Исследователь-разработчик\nSH-03" as R
-rectangle "Система: подготовка моделей и правил" {
- usecase "UC-15 [FR-15]\nПодготовить набор данных" as C15
- usecase "UC-16 [FR-16]\nОбучить модели" as C16
- usecase "UC-17 [FR-17]\nОценить модель на test" as C17
- usecase "UC-18 [FR-18]\nСохранить версию модели" as C18
- usecase "UC-19 [FR-19]\nНастроить версию правил" as C19
+@startdot
+digraph ModelPreparation {
+  graph [layout=neato, inputscale=72, splines=line, overlap=true, outputorder=edgesfirst,
+         bgcolor="white", pad=0.18, fontname="DejaVu Sans", dpi=120]
+  node [pin=true, fontname="DejaVu Sans", fontcolor="#17324A", fontsize=14]
+  edge [fontname="DejaVu Sans", fontsize=12, color="#526A7E", fontcolor="#324C62", arrowsize=0.85, penwidth=1.25]
+
+  // Позиции заданы в пунктах. X растёт вправо, Y в вызовах ниже растёт вниз.
+  !procedure $dotPoint($k,$x,$y)
+    $k [pos="$x,-$y!", shape=point, width=0, height=0, label="", style=invis]
+  !endprocedure
+
+  !procedure $actor($id,$x,$y,$title,$code)
+    !$top = $y - 17
+    !$neck = $y - 9
+    !$hip = $y + 10
+    !$foot = $y + 24
+    !$left = $x - 15
+    !$right = $x + 15
+    !$legL = $x - 11
+    !$legR = $x + 11
+    !$textY = $y + 45
+    $id##Head [pos="$x,-$top!", shape=circle, fixedsize=true, width=0.21, height=0.21, label="", color="#31516B", penwidth=1.35]
+    $dotPoint($id+"Neck",$x,$neck)
+    $dotPoint($id+"Hip",$x,$hip)
+    $dotPoint($id+"HandL",$left,$y)
+    $dotPoint($id+"HandR",$right,$y)
+    $dotPoint($id+"FootL",$legL,$foot)
+    $dotPoint($id+"FootR",$legR,$foot)
+    $id##Neck -> $id##Hip [dir=none, color="#31516B"]
+    $id##HandL -> $id##HandR [dir=none, color="#31516B"]
+    $id##Hip -> $id##FootL [dir=none, color="#31516B"]
+    $id##Hip -> $id##FootR [dir=none, color="#31516B"]
+    $id##Text [pos="$x,-$textY!", shape=plain, label=<<TABLE BORDER="0" CELLBORDER="0" CELLPADDING="0" CELLSPACING="0"><TR><TD WIDTH="210" ALIGN="LEFT">$title</TD></TR><TR><TD ALIGN="LEFT"><FONT POINT-SIZE="11" COLOR="#4D6477">$code</FONT></TD></TR></TABLE>>]
+  !endprocedure
+
+  // Точка начала связи находится рядом с фигурой актора.
+  !procedure $association($actorX,$actorY,$target,$dx,$dy)
+    !$x = $actorX + $dx
+    !$y = $actorY + $dy
+    $dotPoint("FromActor"+$target,$x,$y)
+    FromActor##$target -> $target:w [dir=none]
+  !endprocedure
+
+  !procedure $usecase($n,$x,$y,$action,$fill)
+    C##$n [pos="$x,-$y!", shape=ellipse, fixedsize=true, width=3.55, height=0.87,
+      style=filled, fillcolor="$fill", color="#55738D", penwidth=1.1,
+      label="UC-$n [FR-$n]\n$action"]
+  !endprocedure
+
+  !$actorX = 171
+  !$actorY = 244
+  $actor(R,$actorX,$actorY,"Исследователь-разработчик","SH-03")
+  // Подпись смещена влево, чтобы под ней не проходили связи.
+  RText [pos="95,-302!"]
+
+  Frame [pos="507,-239!", width=6.3, height=6.45, fixedsize=true, shape=box,
+         label="", color="#6B8397", penwidth=1.15]
+  FrameTitle [pos="507,-31!", shape=plain, fontsize=17,
+              label=<<B>Подсистема подготовки моделей и правил</B>>]
+
+  $usecase("15",507,78,"Подготовить набор данных","#F6F9FC")
+  $usecase("16",507,160,"Обучить модели","#F6F9FC")
+  $usecase("17",507,244,"Оценить модель на test","#F6F9FC")
+  $usecase("18",507,328,"Опубликовать выпуск моделей","#F6F9FC")
+  $usecase("19",507,412,"Опубликовать версию правил","#F6F9FC")
+
+  $association($actorX,$actorY,"C15",15,-19)
+  $association($actorX,$actorY,"C16",21,-9)
+  $association($actorX,$actorY,"C17",24,0)
+  $association($actorX,$actorY,"C18",21,9)
+  $association($actorX,$actorY,"C19",15,19)
 }
-R -- C15
-R -- C16
-R -- C17
-R -- C18
-R -- C19
-@enduml
+@enddot
