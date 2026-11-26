@@ -1,0 +1,30 @@
+@startuml
+!include <C4/C4_Component>
+UpdateRelStyle("#334155", "#58697C")
+skinparam dpi 132
+skinparam nodesep 35
+skinparam ranksep 40
+title ML-сервис • Компоненты (C4 L3)
+Container(backend, "Бэкенд", "API / FastAPI")
+ContainerDb(archive, "Архив моделей и данных", "Docker volume")
+Container_Boundary(ml, "ML-сервис • FastAPI / PyTorch") {
+  Component(api, "Контроллер прогноза", "FastAPI", "Контракт прогноза\nFR-05–08, 11")
+  Component(service, "Сервис прогноза", "Python", "Расчёт и применимость\nFR-05–08, 11")
+  Component(loader, "Загрузчик моделей", "Python / PyTorch", "Модели и паспорта выпуска\nFR-18")
+  Component(detector, "Детектор элементов", "PyTorch", "Рамки и ID • FR-05")
+  Component(attention, "Модель внимания", "PyTorch", "Карта внимания • FR-06")
+  Component(actions, "Модель аффордансов", "PyTorch", "Оценки действий • FR-08")
+  Component(result, "Сборщик результата", "Python / NumPy", "Нормировка и сумма в рамке\nFR-07")
+}
+Rel_R(backend, api, "Вызывает прогноз", "HTTP/REST")
+Rel_D(api, service, "Запускает расчёт", "Вызов Python")
+' Загрузчик возвращает сервису три готовых объекта с весами указанного выпуска.
+Rel_U(service, loader, "Получает три модели", "Вызов Python")
+Rel_U(loader, archive, "Читает веса и паспорта", "Файловая система, RO")
+Rel_U(service, detector, "Запрашивает рамки", "Вызов Python")
+Rel_L(service, attention, "Запрашивает карту", "Вызов Python")
+Rel_R(service, actions, "Передаёт вырезки и ID", "Вызов Python")
+Rel_D(service, result, "  Запрашивает итог", "Вызов Python")
+Rel_D(actions, result, "Передаёт оценки", "Обратный вызов Python")
+Rel_D(attention, result, "Передаёт карту", "Обратный вызов Python")
+@enduml

@@ -1,0 +1,31 @@
+@startuml
+!include <C4/C4_Component>
+skinparam nodesep 30
+skinparam ranksep 40
+skinparam ArrowFontSize 15
+UpdateRelStyle("#334155", "#58697C")
+skinparam dpi 132
+title Бэкенд • Компоненты (C4 L3)
+Container(web, "Веб-интерфейс", "SPA / React")
+Container(ml, "ML-сервис", "API / FastAPI, PyTorch")
+ContainerDb(db, "База анализов и правил", "PostgreSQL")
+Container_Boundary(backend, "Бэкенд • FastAPI / Python") {
+  Component(api, "Контроллер анализа", "FastAPI", "HTTP, сессии\nFR-01–03, 11–13, 20")
+  Component(service, "Сервис анализа", "Python", "Проверка входа и доступа\nFR-03–04, 11–14, 20")
+  Component(publisher, "Публикатор заданий", "Python", "Очередь • FR-03, 20")
+  Component(worker, "Обработчик заданий", "Python / asyncio", "Первичный анализ и пересчёт\nFR-03, 09–10, 14, 20")
+  Component(rules, "Правила рекомендаций", "Python", "Сопоставление и правила\nFR-09–10, 14")
+  Component(repo, "Репозиторий анализов", "psycopg", "Задачи, привязки, отчёты\nFR-03, 09, 11–14, 20")
+  Component(client, "Клиент ML-сервиса", "HTTPX", "Интеграция для FR-05–08\nПроверка ответа")
+}
+Rel_R(web, api, "Загружает вход, читает отчёт", "HTTPS/REST")
+Rel_D(api, service, "Передаёт запрос и сессию", "Вызов Python")
+Rel_R(service, publisher, "Ставит задание", "Вызов Python")
+Rel_D(service, repo, "Читает статус\nи отчёт", "Вызов Python")
+Rel_D(publisher, repo, "Записывает задачу", "Вызов Python")
+Rel_U(worker, repo, "Читает задачу, выпуск\nи версию правил,\nсохраняет итог", "Вызов Python")
+Rel_L(worker, rules, "Проверяет правила", "Вызов Python")
+Rel_D(worker, client, "Запрашивает\nпрогноз", "Вызов Python")
+Rel_D(client, ml, "Запрос прогноза", "HTTP/REST")
+Rel_U(repo, db, "Хранит данные", "SQL/TCP")
+@enduml

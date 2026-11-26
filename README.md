@@ -47,8 +47,9 @@
 
 ## Лабораторные работы
 
-| Работа | Материалы |
-|---|---|
-| № 1. Формулирование требований | [Отчёт](./Lab%20Work%20%E2%84%961/docs/LAB_1_REPORT.md), [анализ интерфейса](./Lab%20Work%20%E2%84%961/docs/use-case.png), [подготовка моделей](./Lab%20Work%20%E2%84%961/docs/model-preparation.png), [исходник анализа](./Lab%20Work%20%E2%84%961/docs/use-case.puml), [исходник подготовки](./Lab%20Work%20%E2%84%961/docs/model-preparation.puml) |
+| Работа | Отчёт | Диаграммы (PNG) | Исходники (PlantUML) |
+|---|---|---|---|
+| № 1. Формулирование требований | [Отчёт](./Lab%20Work%20%E2%84%961/docs/LAB_1_REPORT.md) | [Анализ интерфейса](./Lab%20Work%20%E2%84%961/docs/use-case.png)<br>[Подготовка моделей](./Lab%20Work%20%E2%84%961/docs/model-preparation.png) | [Анализ интерфейса](./Lab%20Work%20%E2%84%961/docs/use-case.puml)<br>[Подготовка моделей](./Lab%20Work%20%E2%84%961/docs/model-preparation.puml) |
+| № 2. Архитектура в нотации C4 | [Отчёт](./Lab%20Work%20%E2%84%962/docs/LAB_2_REPORT.md) | [Контекст](./Lab%20Work%20%E2%84%962/docs/c4/01-context.png)<br>[Контейнеры](./Lab%20Work%20%E2%84%962/docs/c4/02-containers.png)<br>[Компоненты бэкенда](./Lab%20Work%20%E2%84%962/docs/c4/03-backend.png)<br>[Компоненты ML-сервиса](./Lab%20Work%20%E2%84%962/docs/c4/04-ml-service.png) | [Контекст](./Lab%20Work%20%E2%84%962/docs/c4/01-context.puml)<br>[Контейнеры](./Lab%20Work%20%E2%84%962/docs/c4/02-containers.puml)<br>[Компоненты бэкенда](./Lab%20Work%20%E2%84%962/docs/c4/03-backend.puml)<br>[Компоненты ML-сервиса](./Lab%20Work%20%E2%84%962/docs/c4/04-ml-service.puml) |
 
-Отчёты размещаются в `Lab Work №N/docs`, программный код при необходимости в `Lab Work №N/src`. Постановка и результаты работ публикуются через Pull Request с назначением преподавателя проверяющим.
+Отчёты размещаются в `Lab Work №N/docs`, программный код при необходимости — в `Lab Work №N/src`. Постановка и результаты работ публикуются через Pull Request с назначением преподавателя проверяющим.

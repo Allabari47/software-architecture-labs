@@ -1,0 +1,14 @@
+@startuml
+!include <C4/C4_Context>
+UpdateRelStyle("#334155", "#58697C")
+skinparam dpi 132
+title Система анализа интерфейсов • Системный контекст (C4 L1)
+Person(designer, "UX/UI-дизайнер или аналитик", "SH-01. Проверяет интерфейс по скриншоту")
+Person_Ext(owner, "Владелец интерфейса", "SH-02. Анализирует свой интерфейс")
+Person(researcher, "Исследователь-разработчик", "SH-03. Готовит данные, модели и правила")
+System(uiAnalysis, "Система анализа интерфейсов [System]", "Прогнозирует внимание и воспринимаемые действия.\nОбъясняет возможные проблемы по элементам.")
+Rel_R(designer, uiAnalysis, "Загружает скриншот, изучает отчёт", "HTTPS")
+Rel_L(owner, uiAnalysis, "Запускает свой анализ,\nописывает функции", "HTTPS")
+Rel_U(researcher, uiAnalysis, "Анализирует скриншот", "HTTPS")
+Rel_U(researcher, uiAnalysis, "Готовит модели и правила", "CLI в среде развёртывания")
+@enduml
